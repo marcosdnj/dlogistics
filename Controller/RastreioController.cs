@@ -25,7 +25,7 @@ namespace delfimLogAPI.Controller
 
             return Ok(rastreioAll);
         }
-
+        //////////////////////////////
 
 
         [HttpGet]
