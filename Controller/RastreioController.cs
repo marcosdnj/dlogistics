@@ -25,7 +25,7 @@ namespace delfimLogAPI.Controller
 
             return Ok(rastreioAll);
         }
-        //////////////////////////////
+        /////////////////////////////////
 
 
         [HttpGet]
@@ -53,7 +53,7 @@ namespace delfimLogAPI.Controller
 
             var newrastreio = new Rastreio
             {
-                Codigo = Guid.NewGuid().ToString().ToUpper(),
+                Codigo = Guid.NewGuid().ToString().Substring(0, 8).ToUpper(),
                 Nome = rastreio.Nome,
                 Origem = rastreio.Origem,
                 Preco = rastreio.Preco,
@@ -74,7 +74,43 @@ namespace delfimLogAPI.Controller
                 return BadRequest("Erro ao salvar");
             }
         }
+        [HttpPut("put/{id}")]
+        public async Task<IActionResult> PutAsync(
+            [FromServices]AppDbContext context, 
+            [FromBody]PutRastreioViewModel model,
+            [FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
+            var rastreio = await context.Rastreios.FirstOrDefaultAsync(x => x.Id == id);
+
+
+            if (rastreio == null)
+                return NotFound("Item não encontrado");
+
+            try
+            {
+                //retorna os 8 primeiros caracteres do cod de rastreio
+                //rastreio.Codigo = model.Codigo.Substring(0, 8);
+
+                rastreio.Nome = model.Nome;
+
+                context.Rastreios.Update(rastreio);
+                await context.SaveChangesAsync();
+                return Ok(rastreio);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest();
+            }
+
+
+
+
+
+
+        }
         
 
 
