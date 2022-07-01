@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace delfimLogAPI.Controller
@@ -51,6 +52,9 @@ namespace delfimLogAPI.Controller
             if (!ModelState.IsValid)
                 return BadRequest("ERROR");
 
+
+            DateTime data = DateTime.Now;
+            string date = data.ToString("dd/MM/yyyy HH:mm");
             var newrastreio = new Rastreio
             {
                 Codigo = Guid.NewGuid().ToString().Substring(0, 8).ToUpper(),
@@ -60,7 +64,7 @@ namespace delfimLogAPI.Controller
                 Destino = rastreio.Destino,
                 Remetente = rastreio.Remetente,
                 Destinatario = rastreio.Destinatario,
-                Data = DateTime.Now
+                Data = date
             };
 
             try

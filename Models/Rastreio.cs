@@ -12,6 +12,6 @@ namespace delfimLogAPI.Models
         public string Destino { get; set; }
         public string Remetente { get; set; }
         public string Destinatario { get; set; }
-        public DateTime Data { get; set; } = DateTime.Now;
+        public string Data { get; set; }
     }
 }
